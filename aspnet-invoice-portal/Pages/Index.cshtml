@@ -1,0 +1,72 @@
+@page
+@model InvoiceAccessibilityLab.Pages.IndexModel
+@{
+    ViewData["Title"] = "Invoice Accessibility Lab";
+    var fixedMode = Model.IsFixed;
+}
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Invoice Accessibility Lab</title><link rel="stylesheet" href="/css/site.css"/></head>
+<body>
+<header><h1>Invoice Management</h1></header>
+<main>
+<p class="mode">Practice mode: <strong>@(fixedMode ? "Remediated" : "Intentionally broken")</strong> — <a href="/?mode=broken">Broken</a> / <a href="/?mode=fixed">Fixed</a></p>
+<section>
+<h2>Send invoice notification</h2>
+<form method="post" asp-route-mode="@(fixedMode ? "fixed" : "broken")" novalidate>
+@if (fixedMode)
+{
+    <label asp-for="CustomerEmail">Customer email</label>
+    <input asp-for="CustomerEmail" aria-describedby="emailHelp emailError" aria-invalid="@(!ViewData.ModelState.IsValid ? "true" : "false")" />
+    <small id="emailHelp">We'll use this address for the demo notification.</small>
+    <span id="emailError" asp-validation-for="CustomerEmail" role="alert" class="error"></span>
+}
+else
+{
+    <span>Customer email</span>
+    <input name="CustomerEmail" value="@Model.CustomerEmail" placeholder="Email" />
+    <p class="error">@Html.ValidationMessageFor(m => m.CustomerEmail)</p>
+}
+<button type="submit">Prepare notification</button>
+</form>
+@if (fixedMode)
+{
+    <p role="status" aria-live="polite">@Model.SuccessMessage</p>
+}
+else
+{
+    <p>@Model.SuccessMessage</p>
+}
+</section>
+<section>
+<h2>Invoices</h2>
+<table><caption>Open invoices</caption>
+<thead><tr>
+@if (fixedMode)
+{
+    <th scope="col">Invoice</th><th scope="col">Customer</th><th scope="col">Balance</th>
+}
+else
+{
+    <td>Invoice</td><td>Customer</td><td>Balance</td>
+}
+</tr></thead>
+<tbody><tr><td>INV-101</td><td>Acme Co.</td><td>$320</td></tr><tr><td>INV-102</td><td>Example LLC</td><td>$175</td></tr></tbody>
+</table>
+</section>
+<section>
+<h2>Payment actions</h2>
+@if (fixedMode)
+{
+    <button type="button" id="action" onclick="showMessage()">Generate payment link</button>
+    <p id="actionStatus" role="status" aria-live="polite"></p>
+}
+else
+{
+    <div class="fakeButton" onclick="showMessage()">Generate payment link</div>
+    <p id="actionStatus"></p>
+}
+</section>
+</main>
+<script>function showMessage(){document.getElementById('actionStatus').textContent='Demo payment link generated. No external payment service was contacted.';}</script>
+</body></html>
