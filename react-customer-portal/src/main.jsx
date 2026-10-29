@@ -5,6 +5,7 @@ import './style.css';
 const params = new URLSearchParams(location.search);
 const fixed = params.get('mode') !== 'broken';
 const showDemo = params.has('demo');
+const showCaseStudy = params.get('page') === 'case-study';
 
 function Dialog({onClose}) {
   const closeRef=useRef(null), dialogRef=useRef(null);
@@ -71,6 +72,48 @@ function App(){
    {dialog && <Dialog onClose={closeDialog}/>}
  </div>;
 }
+const cases = [
+ {id:"01",title:"Form labels",wcag:"1.3.1 · 3.3.2",problem:"A visible text label is not programmatically associated with its input. Screen-reader users may not hear a meaningful field name.",before:'<span>Email address</span>\n<input type="text" />',after:'<label htmlFor="email">Email address</label>\n<input id="email" type="email" />',test:"Focus the field with Tab; confirm NVDA announces “Email address” and the input role."},
+ {id:"02",title:"Keyboard-operable controls",wcag:"2.1.1 · 4.1.2",problem:"A clickable div is not a native keyboard-operable button.",before:'<div onClick={openDialog}>View details</div>',after:'<button onClick={openDialog}>\n  View details\n</button>',test:"Tab to the control; activate with Enter and Space. Confirm the accessible role is button."},
+ {id:"03",title:"Dialog focus management",wcag:"2.4.3 · 4.1.2",problem:"A popup opens without a dialog role, managed focus, or an Escape-key dismissal path.",before:'<section className="dialog">\n  <h2>Account information</h2>\n</section>',after:'<section role="dialog" aria-modal="true"\n  aria-labelledby="dialogTitle">\n  <h2 id="dialogTitle">Account information</h2>\n</section>',test:"Verify focus moves into the dialog, Tab stays within it, Escape closes it, and focus returns to the trigger. ARIA alone does not implement this behavior."},
+ {id:"04",title:"Validation error messages",wcag:"3.3.1 · 3.3.2",problem:"The error is visually present but not connected to the field or reliably announced.",before:'<input value={email} />\n<p>Enter a valid email.</p>',after:'<input aria-invalid={true}\n  aria-describedby="emailError" />\n<p id="emailError" role="alert">\n  Enter a valid email.\n</p>',test:"Submit an invalid value. Confirm the error is announced and associated with the input. Check repeated errors and focus behavior."},
+ {id:"05",title:"Dynamic status announcements",wcag:"4.1.3",problem:"A success message appears after submission but may not be announced without a live status region.",before:'<p>{status}</p>',after:'<p role="status" aria-live="polite">\n  {status}\n</p>',test:"Submit a valid value; confirm NVDA announces the new status without moving focus."}
+];
+function CaseStudy(){
+ return <div className="portfolio">
+  <a className="skip" href="#main">Skip to content</a>
+  <header className="portfolio-header"><a className="brand" href="./">Accessibility Remediation <span>Portfolio</span></a><nav aria-label="Case study navigation"><a href="./">Home</a><a href="#examples">Examples</a><a href="#verification">Verification</a></nav></header>
+  <main id="main">
+   <section className="case-hero">
+    <p className="eyebrow">Technical case study · React</p>
+    <h1>Customer Portal Accessibility Remediation</h1>
+    <p className="lead">Five practical accessibility barriers, their code-level corrections, and a repeatable manual verification plan.</p>
+    <div className="actions"><a className="primary-link" href="?demo=1&mode=broken">Explore broken demo</a><a className="secondary-link" href="?demo=1&mode=fixed">Explore improved demo</a></div>
+    <p className="case-disclosure"><strong>Portfolio demonstration:</strong> This is a synthetic learning application, not a client engagement. The code examples illustrate intended fixes; automated and screen-reader testing have not yet been independently documented. No claim of WCAG conformance is made.</p>
+   </section>
+   <section id="examples" className="portfolio-section">
+    <p className="eyebrow">Before & after</p><h2>Five remediation examples</h2>
+    {cases.map(c=><article className="case-item" key={c.id}>
+      <div className="case-item-heading"><span className="service-num">Issue {c.id}</span><h3>{c.title}</h3><span className="wcag-pill">WCAG {c.wcag}</span></div>
+      <p>{c.problem}</p>
+      <div className="code-grid">
+       <div><h4>Before · barrier</h4><pre><code>{c.before}</code></pre></div>
+       <div><h4>After · illustrative correction</h4><pre><code>{c.after}</code></pre></div>
+      </div>
+      <p className="verify-note"><strong>Manual verification:</strong> {c.test}</p>
+    </article>)}
+   </section>
+   <section id="verification" className="portfolio-section">
+    <p className="eyebrow">Evidence checklist</p><h2>Verification still to complete</h2>
+    <p>Use the live demo to collect real evidence. Do not describe an issue as verified until you have performed and recorded the test.</p>
+    <ul className="verification-list"><li>Run axe DevTools in broken and improved modes and record findings.</li><li>Test keyboard-only Tab, Shift+Tab, Enter, Space, and Escape interactions.</li><li>Test with NVDA and a supported browser; record announcements.</li><li>Check focus order, focus visibility, and focus restoration.</li><li>Document browser, OS, screen reader version, date, and residual limitations.</li></ul>
+    <p>See the <a href="https://github.com/aviherbstman-creator/accessibility-remediation-portfolio/blob/main/PORTFOLIO-ISSUE-TEMPLATE.md">issue report template</a> for an evidence log.</p>
+    <div className="actions"><a className="primary-link" href="https://github.com/aviherbstman-creator/accessibility-remediation-portfolio/tree/main/react-customer-portal">View source code</a><a className="secondary-link" href="./">Return to portfolio</a></div>
+   </section>
+  </main>
+  <footer>Accessibility Remediation Portfolio · Demonstration case study</footer>
+ </div>;
+}
 function Landing(){
   return <div className="portfolio">
     <a className="skip" href="#main">Skip to content</a>
@@ -103,7 +146,7 @@ function Landing(){
             <span className="project-type">Live interactive demo</span><h3>React Customer Portal</h3>
             <p>Compare intentionally broken and improved forms, dialogs, keyboard controls, table headers, and status announcements.</p>
             <div className="project-links"><a href="?demo=1&mode=broken">Broken version</a><a href="?demo=1&mode=fixed">Remediated version</a></div>
-            <a className="repo-link" href="https://github.com/aviherbstman-creator/accessibility-remediation-portfolio/tree/main/react-customer-portal">Review React source code</a>
+            <a className="repo-link" href="?page=case-study">Read React remediation case study</a><br/><a className="repo-link" href="https://github.com/aviherbstman-creator/accessibility-remediation-portfolio/tree/main/react-customer-portal">Review React source code</a>
           </article>
           <article className="project-card">
             <span className="project-type">Source-code case study</span><h3>ASP.NET Core Invoice Portal</h3>
@@ -128,4 +171,4 @@ function Landing(){
     <footer>Accessibility Remediation Portfolio · Built with React · <a href="https://github.com/aviherbstman-creator/accessibility-remediation-portfolio">Source on GitHub</a></footer>
   </div>;
 }
-createRoot(document.getElementById('root')).render(showDemo ? <App/> : <Landing/>);
+createRoot(document.getElementById('root')).render(showDemo ? <App/> : showCaseStudy ? <CaseStudy/> : <Landing/>);
