@@ -1,1 +1,37 @@
 *{box-sizing:border-box}body{font-family:system-ui,Arial,sans-serif;margin:0;color:#1b2938;background:#f4f7fa;line-height:1.5}.shell{max-width:850px;margin:auto;padding:24px}header{background:#173d64;color:white;padding:22px;border-radius:12px}header a{color:white;margin-right:20px}main section{background:white;padding:22px;margin:18px 0;border-radius:12px;box-shadow:0 2px 8px #0001}h1,h2{margin-top:0}label,form span{display:block;margin-bottom:8px}input{padding:10px;width:min(100%,420px);display:block;margin-bottom:12px;border:2px solid #566b7d;border-radius:6px}button,.fakeButton{display:inline-block;padding:10px 15px;background:#164e80;color:white;border:0;border-radius:6px;cursor:pointer;font:inherit}button:focus-visible,a:focus-visible,input:focus-visible{outline:3px solid #f09a24;outline-offset:3px}.error{color:#a11225;font-weight:600}.mode{background:#e7f2ff;padding:12px;border-radius:8px}table{border-collapse:collapse;width:100%}td,th{padding:10px;border:1px solid #a5b2bd;text-align:left}th{background:#e8eef4}.overlay{position:fixed;inset:0;background:#0009;display:grid;place-items:center;padding:20px}.dialog{background:white;padding:26px;border-radius:12px;width:min(450px,100%)}
+/* Portfolio landing page */
+.portfolio{color:#172b3b;background:#f7f9fc;min-height:100vh}
+.portfolio-header{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 28px;background:transparent;color:#172b3b;border-radius:0}
+.portfolio-header .brand{font-weight:800;text-decoration:none;color:#14395c;font-size:1.08rem}
+.portfolio-header .brand span{font-weight:400;color:#546b80}
+.portfolio-header nav{display:flex;flex-wrap:wrap;gap:18px}
+.portfolio-header nav a{color:#254a68;margin:0;text-decoration:none;font-weight:600}
+.portfolio-header nav a:hover,.portfolio a:hover{text-decoration:underline}
+.portfolio main{max-width:1200px;margin:auto;padding:0 28px}
+.portfolio .hero{padding:100px 0 90px;max-width:900px}
+.portfolio .eyebrow{text-transform:uppercase;letter-spacing:.13em;color:#315f83;font-weight:800;font-size:.78rem}
+.portfolio h1{font-size:clamp(2.7rem,6vw,5.3rem);letter-spacing:-.055em;line-height:1.06;margin:20px 0 24px;color:#102c47}
+.portfolio .lead{font-size:1.25rem;color:#41596d;max-width:760px}
+.portfolio .actions,.portfolio .project-links{display:flex;flex-wrap:wrap;gap:14px;margin:30px 0 16px}
+.portfolio .primary-link,.portfolio .secondary-link{display:inline-block;padding:13px 19px;border-radius:8px;font-weight:700;text-decoration:none}
+.portfolio .primary-link{background:#155785;color:white}
+.portfolio .secondary-link{border:2px solid #155785;color:#155785}
+.portfolio .note{font-size:.9rem;color:#5d7080}
+.portfolio-section{padding:65px 0;border-top:1px solid #dbe4ed}
+.portfolio-section h2{font-size:clamp(1.9rem,3vw,2.7rem);letter-spacing:-.035em;color:#102c47;margin:10px 0 28px}
+.portfolio .service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.portfolio .service-grid article,.portfolio .project-card{background:#fff;border:1px solid #d9e4ec;border-radius:14px;padding:26px;box-shadow:0 6px 25px #1539580a}
+.portfolio .service-num,.portfolio .project-type{font-size:.8rem;font-weight:800;color:#326a91;letter-spacing:.04em}
+.portfolio h3{font-size:1.3rem;margin:16px 0 12px;color:#153550}
+.portfolio article p,.portfolio .approach p{color:#42586b}
+.portfolio .project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.portfolio .project-links a,.portfolio .repo-link{color:#155785;font-weight:700}
+.portfolio .repo-link{display:inline-block;margin-top:12px}
+.portfolio .approach{max-width:900px}
+.portfolio .contact{background:#e9f2f9;border-radius:16px;padding:38px;margin-bottom:60px}
+.portfolio footer{padding:26px;text-align:center;color:#546b80;border-top:1px solid #dbe4ed}
+.portfolio footer a{color:#155785}
+.portfolio .skip{position:absolute;top:-100px;left:10px;background:white;padding:10px;z-index:10}
+.portfolio .skip:focus{top:10px}
+.portfolio a:focus-visible{outline:3px solid #ed8d18;outline-offset:4px}
+@media(max-width:750px){.portfolio-header{align-items:flex-start;flex-direction:column}.portfolio .hero{padding:65px 0}.portfolio .service-grid,.portfolio .project-grid{grid-template-columns:1fr}}
