@@ -165,7 +165,7 @@ function Landing(){
         <p className="eyebrow">Get in touch</p><h2>Have accessibility issues in your backlog?</h2>
         <p>Connect through GitHub to discuss a focused review or remediation engagement.</p>
         <a className="primary-link" href="https://github.com/aviherbstman-creator">Visit my GitHub profile</a>
-        <p className="note">Add a professional email address or LinkedIn link here when you're ready to accept inquiries.</p>
+        <p className="note">aviherbstman@gmail.com</p>
       </section>
     </main>
     <footer>Accessibility Remediation Portfolio · Built with React · <a href="https://github.com/aviherbstman-creator/accessibility-remediation-portfolio">Source on GitHub</a></footer>
